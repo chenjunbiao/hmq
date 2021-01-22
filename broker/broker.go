@@ -274,9 +274,6 @@ func (b *Broker) handleConnection(typ int, conn net.Conn) {
 
 	log.Info("read connect from ", zap.String("clientID", msg.ClientIdentifier))
 
-	//CJB:
-	log.Info("#1 connect content: ", zap.String("msg", msg.String()))
-
 	connack := packets.NewControlPacket(packets.Connack).(*packets.ConnackPacket)
 	connack.SessionPresent = msg.CleanSession
 	connack.ReturnCode = msg.Validate()

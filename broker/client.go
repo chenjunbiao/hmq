@@ -3,6 +3,7 @@ package broker
 import (
 	"context"
 	"errors"
+	"fmt"
 	"math/rand"
 	"net"
 	"reflect"
@@ -197,6 +198,10 @@ func ProcessMessage(msg *Message) {
 
 	if c.typ == CLIENT {
 		log.Debug("Recv message:", zap.String("message type", reflect.TypeOf(msg.packet).String()[9:]), zap.String("ClientID", c.info.clientID))
+		//CJB:
+		//log.Info("#11 Recv message:",
+		//	zap.String("message type", reflect.TypeOf(msg.packet).String()[9:]),
+		//	zap.String("ClientID", c.info.clientID))
 	}
 
 	switch ca.(type) {
@@ -336,6 +341,11 @@ func (c *client) processClientPublish(packet *packets.PublishPacket) {
 		Payload:   string(packet.Payload),
 		Topic:     topic,
 	})
+
+	// CJB:
+	fmt.Printf("%v: #20 processClientPublish: QOS=%v, RETAIN=%v, TOPIC=%v, PAYLOAD=%v\n",
+		time.Now().Format("2006-01-02 15:04:05"),
+		packet.Qos, packet.Retain, topic, string(packet.Payload))
 
 	switch packet.Qos {
 	case QosAtMostOnce:

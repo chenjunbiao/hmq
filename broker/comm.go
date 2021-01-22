@@ -2,6 +2,7 @@ package broker
 
 import (
 	"encoding/json"
+	"fmt"
 	"reflect"
 	"time"
 
@@ -151,6 +152,11 @@ func publish(sub *subscription, packet *packets.PublishPacket) {
 	// if err != nil {
 	// 	log.Error("process message for psub error,  ", zap.Error(err))
 	// }
+
+	//CJB:
+	fmt.Printf("%v: #21 publish to subscription: QOS=%v, TOPIC=%v, PAYLOAD=%v\n",
+		time.Now().Format("2006-01-02 15:04:05"),
+		sub.qos, sub.topic, string(packet.Payload))
 
 	switch packet.Qos {
 	case QosAtMostOnce:
