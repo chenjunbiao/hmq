@@ -198,11 +198,12 @@ func ProcessMessage(msg *Message) {
 
 	if c.typ == CLIENT {
 		log.Debug("Recv message:", zap.String("message type", reflect.TypeOf(msg.packet).String()[9:]), zap.String("ClientID", c.info.clientID))
-		//CJB:
-		//log.Info("#11 Recv message:",
-		//	zap.String("message type", reflect.TypeOf(msg.packet).String()[9:]),
-		//	zap.String("ClientID", c.info.clientID))
 	}
+
+	// CJB:
+	fmt.Printf("%v: #19 ProcessMessage: packet.Type=%v, client.typ=%v, client.inflight.len=%v, packet=%v\n",
+		time.Now().Format("2006-01-02 15:04:05"),
+		reflect.TypeOf(ca), c.typ, len(c.inflight), ca.String())
 
 	switch ca.(type) {
 	case *packets.ConnackPacket:

@@ -154,10 +154,10 @@ func publish(sub *subscription, packet *packets.PublishPacket) {
 	// }
 
 	//CJB:
-	fmt.Printf("%v: #21 publish to subscription: clientID=%v, QOS=%v, TOPIC=%v, PAYLOAD=%v\n",
+	fmt.Printf("%v: #21 publish to subscription: clientID=%v, inflight.len=%v, sub.QOS=%v, packet.Qos=%v, TOPIC=%v, PAYLOAD=%v\n",
 		time.Now().Format("2006-01-02 15:04:05"),
 		sub.client.info.clientID,
-		sub.qos, sub.topic, string(packet.Payload))
+		len(sub.client.inflight), sub.qos, packet.Qos, sub.topic, string(packet.Payload))
 
 	switch packet.Qos {
 	case QosAtMostOnce:
